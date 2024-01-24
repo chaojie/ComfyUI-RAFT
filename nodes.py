@@ -49,7 +49,7 @@ class RAFTRun:
 
     def run(self, images):
         #torch.set_printoptions(threshold=np.inf)
-        np.set_printoptions(threshold=np.inf)
+        #np.set_printoptions(threshold=np.inf)
         DEVICE = 'cuda'
         comfy_path = os.path.dirname(folder_paths.__file__)
         
@@ -77,14 +77,14 @@ class RAFTRun:
                 image1, image2 = padder.pad(image1, image2)
 
                 flow_low, flow_up = model(image1, image2, iters=20, test_mode=True)
-                viz_out=viz(flow_up.float())
+                viz_out=viz(flow_low.float())
                 viz_tensor_out = torch.tensor(viz_out)  # Convert back to CxHxW
                 viz_tensor_out = torch.unsqueeze(viz_tensor_out, 0)
 
-                motionbrush.append(flow_up.float())
+                motionbrush.append(flow_low.float())
                 vizs.append(viz_tensor_out)
                 #with open('test2.txt','w') as f:
-                #    f.write(f'{flow_up.int().float().cpu().numpy()}')
+                #    f.write(f'{flow_low.int().float().cpu().numpy()}')
         ret=torch.cat(tuple(motionbrush), dim=0).permute(0, 2, 3, 1)
         vizs_tensor=torch.cat(tuple(vizs), dim=0)
         
