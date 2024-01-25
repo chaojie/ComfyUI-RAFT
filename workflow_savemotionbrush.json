@@ -1,0 +1,203 @@
+{
+  "last_node_id": 13,
+  "last_link_id": 16,
+  "nodes": [
+    {
+      "id": 12,
+      "type": "Save MotionBrush",
+      "pos": [
+        1141.5999755859375,
+        263.3999786376953
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "motion_brush",
+          "type": "MotionBrush",
+          "link": 15
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Save MotionBrush"
+      },
+      "widgets_values": [
+        "smoke",
+        "smoke3"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "Unimatch_OptFlowPreprocessor",
+      "pos": [
+        387,
+        251
+      ],
+      "size": {
+        "0": 315,
+        "1": 150
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "OPTICAL_FLOW",
+          "type": "OPTICAL_FLOW",
+          "links": [
+            14
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "PREVIEW_IMAGE",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Unimatch_OptFlowPreprocessor"
+      },
+      "widgets_values": [
+        "gmflow-scale2-regrefine6-mixdata.pth",
+        false,
+        false
+      ]
+    },
+    {
+      "id": 13,
+      "type": "Load MotionBrush From Optical Flow Without Model",
+      "pos": [
+        767,
+        295
+      ],
+      "size": {
+        "0": 304.79998779296875,
+        "1": 26
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "optical_flow",
+          "type": "OPTICAL_FLOW",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MotionBrush",
+          "type": "MotionBrush",
+          "links": [
+            15
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load MotionBrush From Optical Flow Without Model"
+      }
+    },
+    {
+      "id": 8,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        67,
+        192
+      ],
+      "size": [
+        235.1999969482422,
+        341.42499828338623
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            16
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": {
+        "video": "x2mate.com-Premiere pro Smoke intro (channel).mp4",
+        "force_rate": 0,
+        "force_size": "Disabled",
+        "custom_width": 512,
+        "custom_height": 512,
+        "frame_load_cap": 14,
+        "skip_first_frames": 70,
+        "select_every_nth": 1,
+        "choose video to upload": "image",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "x2mate.com-Premiere pro Smoke intro (channel).mp4",
+            "type": "input",
+            "format": "video"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    [
+      14,
+      10,
+      0,
+      13,
+      0,
+      "OPTICAL_FLOW"
+    ],
+    [
+      15,
+      13,
+      0,
+      12,
+      0,
+      "MotionBrush"
+    ],
+    [
+      16,
+      8,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
