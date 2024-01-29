@@ -90,6 +90,33 @@ class LoadMotionBrush:
         print(motion_brush.shape)
         return (motion_brush,)
 
+class VizMotionBrush:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "motion_brush": ("MotionBrush",),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE", )
+    FUNCTION = "run"
+    CATEGORY = "RAFT"
+
+    def run(self, motion_brush):
+        motion_brush=motion_brush.permute(0, 3, 1, 2)
+        vizs = []
+        for flow_up in motion_brush:
+            print(flow_up.unsqueeze(0).shape)
+            viz_out=viz(flow_up.unsqueeze(0).float())
+            viz_tensor_out = torch.tensor(viz_out)  # Convert back to CxHxW
+            viz_tensor_out = torch.unsqueeze(viz_tensor_out, 0)
+
+            vizs.append(viz_tensor_out)
+
+        vizs_tensor=torch.cat(tuple(vizs), dim=0)
+        return (vizs_tensor, )
+
 class RAFTRun:
     @classmethod
     def INPUT_TYPES(s):
@@ -152,4 +179,5 @@ NODE_CLASS_MAPPINGS = {
     "RAFT Run":RAFTRun,
     "Save MotionBrush":SaveMotionBrush,
     "Load MotionBrush":LoadMotionBrush,
+    "VizMotionBrush":VizMotionBrush,
 }
